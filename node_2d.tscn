@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://b240rsrx6kd67"]
+
+[ext_resource type="Texture2D" uid="uid://p1uq552evk6t" path="res://icon.svg" id="1_wtcfe"]
+[ext_resource type="FontFile" uid="uid://buau22hcy0hoa" path="res://fonts/PixelOperator8-Bold.ttf" id="2_0e48y"]
+[ext_resource type="PackedScene" uid="uid://c4imospwgxu8n" path="res://Scenes/player.tscn" id="3_epypp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_epypp"]
+font = ExtResource("2_0e48y")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="FloorTile" type="Sprite2D" parent="."]
+position = Vector2(506.5, 471.5)
+scale = Vector2(2.195313, 0.44531265)
+texture = ExtResource("1_wtcfe")
+
+[node name="NameLabel" type="Label" parent="."]
+offset_left = 412.0
+offset_top = 350.0
+offset_right = 610.0
+offset_bottom = 380.0
+text = "Ryan Schirmer"
+label_settings = SubResource("LabelSettings_epypp")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(507, 420)
+zoom = Vector2(4, 4)
+
+[node name="Player" parent="." instance=ExtResource("3_epypp")]
+position = Vector2(503, 440)
