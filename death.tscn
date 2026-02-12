@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://drkk4syl5p2gf"]
+
+[node name="Death" type="Area2D"]

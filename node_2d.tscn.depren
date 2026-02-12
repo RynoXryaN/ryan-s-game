@@ -1,5 +1,6 @@
-[gd_scene load_steps=17 format=4 uid="uid://b240rsrx6kd67"]
+[gd_scene load_steps=20 format=4 uid="uid://b240rsrx6kd67"]
 
+[ext_resource type="Script" uid="uid://pnie75mp0p3r" path="res://Scripts/game_manager.gd" id="1_ir8iy"]
 [ext_resource type="Texture2D" uid="uid://bur1x0a10ddoh" path="res://tilesets/back.png" id="2_d21ai"]
 [ext_resource type="PackedScene" uid="uid://c4imospwgxu8n" path="res://Scenes/player.tscn" id="3_epypp"]
 [ext_resource type="Texture2D" uid="uid://47al4r52s0c7" path="res://tilesets/tilemap_packed.png" id="5_d21ai"]
@@ -7,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://btk4sgifejq2i" path="res://Scenes/platform.tscn" id="7_4d7sh"]
 [ext_resource type="Texture2D" uid="uid://babvhdrla0pre" path="res://tilesets/tilemap_ind_packed.png" id="7_rj586"]
 [ext_resource type="Texture2D" uid="uid://cib4agwi4ol11" path="res://tilesets/tileset.png" id="8_4d7sh"]
+[ext_resource type="PackedScene" uid="uid://dt6ibp0pyumak" path="res://Scenes/Coins.tscn" id="8_rj586"]
+[ext_resource type="PackedScene" uid="uid://85b8h26qwbne" path="res://Scenes/death.tscn" id="9_4d7sh"]
 
 [sub_resource type="TileSet" id="TileSet_d21ai"]
 
@@ -715,6 +718,10 @@ _data = {
 
 [node name="Game" type="Node2D"]
 
+[node name="GameManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_ir8iy")
+
 [node name="TileMapLayers" type="Node2D" parent="."]
 
 [node name="Back" type="Sprite2D" parent="TileMapLayers"]
@@ -748,6 +755,13 @@ autoplay = "Move"
 position = Vector2(337, 528)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+visible = false
 position = Vector2(0, -6)
 zoom = Vector2(4, 4)
 position_smoothing_enabled = true
+
+[node name="Area2D" parent="." instance=ExtResource("8_rj586")]
+position = Vector2(1090, 613)
+
+[node name="Death" parent="." instance=ExtResource("9_4d7sh")]
+position = Vector2(883, 662)

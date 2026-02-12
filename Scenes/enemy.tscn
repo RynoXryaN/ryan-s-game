@@ -1,0 +1,71 @@
+[gd_scene load_steps=9 format=3 uid="uid://fw3phxn0h5i2"]
+
+[ext_resource type="Script" uid="uid://dmgxeugmnhoc3" path="res://Scripts/enemy.gd" id="1_hghv2"]
+[ext_resource type="Texture2D" uid="uid://beh0qqtkkougl" path="res://characters/tilemap-characters.png" id="2_1f0kj"]
+[ext_resource type="PackedScene" uid="uid://phcahy4s6l7o" path="res://Scenes/enemy_projectile.tscn" id="2_afpow"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_afpow"]
+atlas = ExtResource("2_1f0kj")
+region = Rect2(75, 24, 25, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_287tu"]
+atlas = ExtResource("2_1f0kj")
+region = Rect2(50, 24, 25, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0830c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_afpow")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_287tu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_287tu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_287tu")
+}],
+"loop": true,
+"name": &"Shooting",
+"speed": 1.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1f0kj"]
+size = Vector2(17, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_afpow"]
+size = Vector2(15, 1)
+
+[node name="Enemy" type="Node2D" groups=["slam_target"]]
+script = ExtResource("1_hghv2")
+projectile_scene = ExtResource("2_afpow")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_0830c")
+animation = &"Shooting"
+autoplay = "Shooting"
+frame_progress = 0.76816684
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 1.5
+
+[node name="Muzzle" type="Marker2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["slam_target"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-0.5, 1)
+shape = SubResource("RectangleShape2D_1f0kj")
+
+[node name="HeadHitbox" type="Area2D" parent="."]
+position = Vector2(0, -10)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HeadHitbox"]
+position = Vector2(-0.5, 1.5)
+shape = SubResource("RectangleShape2D_afpow")
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="body_entered" from="HeadHitbox" to="." method="_on_head_hitbox_body_entered"]

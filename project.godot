@@ -11,9 +11,21 @@ config_version=5
 [application]
 
 config/name="SchirmerRyan_FirstProject_01"
-run/main_scene="res://node_2d.tscn"
+run/main_scene="res://Scenes/Game.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[debug]
+
+gdscript/warnings/untyped_declaration=2
+gdscript/warnings/unsafe_property_access=2
+gdscript/warnings/unsafe_method_access=2
+gdscript/warnings/unsafe_cast=1
+gdscript/warnings/unsafe_call_argument=2
+
+[layer_names]
+
+2d_physics/layer_2="PlayerLayer"
 
 [rendering]
 

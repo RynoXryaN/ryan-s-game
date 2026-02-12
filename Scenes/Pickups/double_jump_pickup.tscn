@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddteno21bk8um"]
+
+[ext_resource type="Script" uid="uid://44maxk74wb1f" path="res://Scripts/double_jump_pickup.gd" id="1_qvpvl"]
+[ext_resource type="Texture2D" uid="uid://47al4r52s0c7" path="res://tilesets/tilemap_packed.png" id="2_bjn84"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m37cc"]
+size = Vector2(16, 9)
+
+[node name="DoubleJumpPickup" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_qvpvl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_bjn84")
+region_enabled = true
+region_rect = Rect2(145, 63.5, 16, 9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_m37cc")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
