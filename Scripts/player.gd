@@ -3,6 +3,11 @@ extends CharacterBody2D
 
 @onready var game_manager : GameManager = %GameManager
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var jump_sound: AudioStreamPlayer2D = $JumpSound
+@onready var double_jump_sound: AudioStreamPlayer2D = $DoubleJumpSound
+@onready var stomp_sound: AudioStreamPlayer2D = $StompSound
+@onready var death_sound: AudioStreamPlayer2D = $DeathSound
+
 
 @export var max_health: int = 100
 var health: int = max_health
@@ -14,13 +19,13 @@ const JUMP_VELOCITY : float = -275.0
 var last_direction := 0.0
 var is_dead: bool = false
 
-	# Slam (cannonball) variables
+
 var has_slam: bool = false
 var is_slamming: bool = false
 var slam_speed: float = 900.0
 var slam_cooldown: bool = false
 
-	# Double-Jump variables
+
 var has_double_jump: bool = false
 var can_double_jump: bool = false
 
@@ -29,29 +34,30 @@ func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
 	
-	# Add the gravity.
+
 	if not is_on_floor() and not is_slamming:
 		velocity += get_gravity() * delta
 
-	# Start slam if midair and pressing down
+
 	if not is_on_floor():
 		if has_slam and Input.is_action_just_pressed ("ui_down") and not is_slamming and not slam_cooldown:
 			start_slam()
 			
-	# Handle jump.
+
 	if Input.is_action_just_pressed("ui_accept"):
 		if is_on_floor():
 			velocity.y = JUMP_VELOCITY
+			jump_sound.play()
 		elif has_double_jump and can_double_jump:
 			velocity.y = JUMP_VELOCITY
+			double_jump_sound.play()
 			can_double_jump = false
 			print("Double Jump!")
 
 	if is_on_floor():
 		can_double_jump = true
 	
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
+
 	var direction := Input.get_axis ("ui_left", "ui_right")
 	last_direction = direction
 	if direction:
@@ -67,18 +73,28 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	
-	#End slam when hitting the floor
+
 	for i: int in range (get_slide_collision_count()):
 		var collision: KinematicCollision2D = get_slide_collision(i)
 		var collider: Node = collision.get_collider()
 		
-		if is_slamming:
-			if collision.get_normal().y < -0.9:
-				if not collider.is_in_group("slam_target"):
-					end_slam()
-					break
-		
-		
+
+					
+		if is_slamming and collision.get_normal().y < -0.9:
+				
+
+			if collider is BreakBlock:
+				(collider as BreakBlock).break_block()
+
+
+			stomp_sound.pitch_scale = randf_range(0.95, 1.05)
+			stomp_sound.play()
+
+			await get_tree().create_timer(0.05).timeout
+			end_slam()
+			break
+
+	
 	
 	handle_animation()
 
@@ -86,7 +102,6 @@ func _physics_process(delta: float) -> void:
 
 func handle_animation() -> void:
 	
-	# Once dead, DO NOT change animations anymore
 	if is_dead:
 		return
 	
@@ -119,7 +134,7 @@ func die() -> void:
 	is_dead = true	
 	velocity = Vector2.ZERO
 	
-	#Engine.time_scale = 0.5
+	death_sound.play()
 	animated_sprite_2d.play("death")
 	
 	print("Player died")
@@ -137,7 +152,7 @@ func end_slam() -> void:
 	is_slamming = false
 	slam_cooldown = true
 	
-	# Optional Bounce
+
 	velocity.y = -100
 	
 	await get_tree().create_timer(0.3).timeout

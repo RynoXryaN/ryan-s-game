@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8e4t5h8pqai8"]
+
+[ext_resource type="Script" uid="uid://bvqc6k8modroj" path="res://Scripts/break_block.gd" id="1_81atv"]
+[ext_resource type="Texture2D" uid="uid://cib4agwi4ol11" path="res://tilesets/tileset.png" id="2_n3jif"]
+[ext_resource type="AudioStream" uid="uid://byhuwmoegm7yx" path="res://sounds/Land.wav" id="3_n3jif"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g1fqt"]
+size = Vector2(16, 16)
+
+[node name="BreakBlock" type="StaticBody2D"]
+collision_mask = 2
+script = ExtResource("1_81atv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_n3jif")
+region_enabled = true
+region_rect = Rect2(160, 144, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_g1fqt")
+
+[node name="BreakSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_n3jif")

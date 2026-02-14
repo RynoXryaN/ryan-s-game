@@ -1,7 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://c4imospwgxu8n"]
+[gd_scene load_steps=27 format=3 uid="uid://c4imospwgxu8n"]
 
 [ext_resource type="Script" uid="uid://d2bbcycbfya28" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://u1tfdiqa4ryf" path="res://characters/arthurPendragon_.png" id="1_v0iea"]
+[ext_resource type="AudioStream" uid="uid://byhuwmoegm7yx" path="res://sounds/Land.wav" id="3_6t5aa"]
+[ext_resource type="AudioStream" uid="uid://bj4ae4t1pjn3k" path="res://sounds/Die_Short.wav" id="4_vgqql"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cvnsp"]
 radius = 4.0
@@ -184,3 +186,13 @@ sprite_frames = SubResource("SpriteFrames_tx1dd")
 animation = &"death"
 frame = 3
 frame_progress = 1.0
+
+[node name="StompSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_6t5aa")
+volume_db = -2.0
+bus = &"SFX"
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_vgqql")
+volume_db = -4.0
+bus = &"SFX"

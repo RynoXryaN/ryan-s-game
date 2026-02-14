@@ -1,0 +1,140 @@
+[gd_scene load_steps=17 format=3 uid="uid://gy2dfl08xunr"]
+
+[ext_resource type="Script" uid="uid://clc10krtw4pwl" path="res://Scripts/coin_ui.gd" id="1_fdl0h"]
+[ext_resource type="Texture2D" uid="uid://bv0w1rybrf21j" path="res://items/coin.png" id="1_ny26j"]
+[ext_resource type="FontFile" uid="uid://d3wyevj5umoue" path="res://fonts/PixelOperator8.ttf" id="2_fdl0h"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8glcj"]
+atlas = ExtResource("1_ny26j")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsu76"]
+atlas = ExtResource("1_ny26j")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ux5h0"]
+atlas = ExtResource("1_ny26j")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqf2c"]
+atlas = ExtResource("1_ny26j")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7wqu8"]
+atlas = ExtResource("1_ny26j")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fqivn"]
+atlas = ExtResource("1_ny26j")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdh5o"]
+atlas = ExtResource("1_ny26j")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cna6x"]
+atlas = ExtResource("1_ny26j")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_am52h"]
+atlas = ExtResource("1_ny26j")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yttkt"]
+atlas = ExtResource("1_ny26j")
+region = Rect2(144, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mt778"]
+atlas = ExtResource("1_ny26j")
+region = Rect2(160, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8km2t"]
+atlas = ExtResource("1_ny26j")
+region = Rect2(176, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k24i8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8glcj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsu76")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ux5h0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mqf2c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7wqu8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fqivn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qdh5o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cna6x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_am52h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yttkt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mt778")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8km2t")
+}],
+"loop": true,
+"name": &"Spin",
+"speed": 5.0
+}]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_fdl0h")
+
+[node name="FullScreen" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopLeftMargin" type="MarginContainer" parent="FullScreen"]
+layout_mode = 1
+offset_top = 32.0
+offset_right = 200.0
+offset_bottom = 96.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+
+[node name="CoinRow" type="HBoxContainer" parent="FullScreen/TopLeftMargin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="CoinIconHolder" type="Control" parent="FullScreen/TopLeftMargin/CoinRow"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="CoinIcon" type="AnimatedSprite2D" parent="FullScreen/TopLeftMargin/CoinRow/CoinIconHolder"]
+position = Vector2(32, 32)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_k24i8")
+animation = &"Spin"
+autoplay = "Spin"
+frame = 2
+frame_progress = 0.55391926
+
+[node name="CoinCount" type="Label" parent="FullScreen/TopLeftMargin/CoinRow"]
+layout_mode = 2
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_fdl0h")
+theme_override_font_sizes/font_size = 32
+text = "x 00"

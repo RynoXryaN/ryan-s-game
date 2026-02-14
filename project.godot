@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="SchirmerRyan_FirstProject_01"
-run/main_scene="res://Scenes/Game.tscn"
+run/main_scene="uid://bcg7t6phryol8"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Music="*res://Scenes/music.tscn"
 
 [debug]
 

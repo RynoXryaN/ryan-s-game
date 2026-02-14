@@ -4,13 +4,27 @@ class_name GameManager
 
 @onready var death_system: DeathSystem = $"../DeathSystem"
 
-var score : int = 0
+signal score_changed(new_score: int)
 
-func add_points(points : int ) ->void:
-		score += points
-		#score = score + 1
-		print(score)
-		
+var score : int = 0
+var total_coins : int = 0
+var collected_coins : int = 0
+
+func register_coin() -> void:
+	total_coins += 1
+
+func add_points(points: int) -> void:
+	score += points
+	collected_coins += 1
+	emit_signal("score_changed", score)
+	
+	if collected_coins >= total_coins:
+		win_game()
+
+func win_game() -> void:
+	print("YOU WIN!!!")
+	get_tree().change_scene_to_file("res://Scenes/UI/main_menu.tscn")
+
 func player_died(player : Player) -> void:
 	print("GameManager: received player death")
 	
